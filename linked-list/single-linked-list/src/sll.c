@@ -91,18 +91,30 @@ void removeAtEnd(List *list) {
         free(list->head);
         list->head = NULL;
     } else {
-        Node *current = list->head;
-        Node *prev = current;
+        // Remove last element of the list using TWO POINTERS
 
-        while (current->next != NULL) {
-            prev = current;
+        // Node *current = list->head;
+        // Node *prev = current;
+
+        // while (current->next != NULL) {
+        //     prev = current;
+        //     current = current->next;
+        // }
+
+        // prev->next = NULL;
+        // list->tail = prev;
+        // free(current);
+        // current = NULL;
+
+        // Remove last element of the list using ONE POINTER
+        Node *current = list->head;
+
+        while (current->next->next != NULL) {
             current = current->next;
         }
 
-        prev->next = NULL;
-        list->tail = prev;
-        free(current);
-        current = NULL;
+        free(current->next);
+        current->next = NULL;
     }
 }
 
