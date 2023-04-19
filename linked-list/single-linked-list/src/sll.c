@@ -76,9 +76,6 @@ void addAtEnd(List *list, int data) {
 void removeAtStart(List *list) {
     if (list->head == NULL) {
         printf("Empty list\n\n");
-    } else if (list->head->next == NULL) {
-        free(list->head);
-        list->head = NULL;
     } else {
         Node *current = list->head;
         list->head = current->next;
