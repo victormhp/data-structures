@@ -25,6 +25,8 @@ void printList(List *list);
 
 void printLength(List *list);
 
+void reverse(List *list);
+
 void freeList(List *list);
 
 #endif

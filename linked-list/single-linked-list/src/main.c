@@ -9,8 +9,9 @@ void printMenu() {
     printf("4. Remove node at end\n");
     printf("5. Insert node at n position\n");
     printf("6. Remove Node\n");
-    printf("7. Print Linked List\n");
-    printf("8. Exit\n\n");
+    printf("7. Reverse list\n");
+    printf("8. Print Linked List\n");
+    printf("9. Exit\n\n");
     printf("Choose an option: ");
 }
 
@@ -24,7 +25,7 @@ int main() {
         printMenu();
         int num = scanf("%d", &option);
 
-        if (num != 1 || option < 1 || option > 8) {
+        if (num != 1 || option < 1 || option > 9) {
             printf("Invalid option. Please try again.\n\n");
             while (getchar() != '\n'); // Flush input buffer
             continue;
@@ -60,12 +61,15 @@ int main() {
                 removeNode(list, arg1);
                 break;
             case 7:
-                printList(list);
+                reverse(list);
                 break;
             case 8:
+                printList(list);
+                break;
+            case 9:
                 break;
         }
-    } while (option != 8);
+    } while (option != 9);
 
     freeList(list);
     return 0;

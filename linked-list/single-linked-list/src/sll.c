@@ -27,7 +27,6 @@ List *createList() {
     if (!list) return NULL;
 
     list->head = NULL;
-    list->tail = NULL;
     return list;
 }
 
@@ -51,7 +50,6 @@ void addAtStart(List *list, int data) {
     if (list->head == NULL) {
         new = createNode(data);
         list->head = new;
-        list->tail = new;
     } else {
         new = createNode(data);
         new->next = list->head;
@@ -61,15 +59,17 @@ void addAtStart(List *list, int data) {
 
 void addAtEnd(List *list, int data) {
     Node *new = NULL;
+    Node *current = list->head;
 
     if (list->head == NULL) {
         new = createNode(data);
         list->head = new;
-        list->tail = new;
     } else {
         new = createNode(data);
-        list->tail->next = new;
-        list->tail = new;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = new;
     }
 }
 
@@ -170,6 +170,20 @@ void removeNode(List *list, int data) {
         prev = current;
         current = current->next;
     }
+}
+
+void reverse(List *list) {
+    Node *prev = NULL;
+    Node *next = NULL;
+
+    while (list->head != NULL) {
+        next = list->head->next;
+        list->head->next = prev;
+        prev = list->head;
+        list->head = next;
+    }
+
+    list->head = prev;
 }
 
 void printList(List *list) {
