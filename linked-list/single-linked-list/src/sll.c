@@ -102,7 +102,6 @@ void removeAtEnd(List *list) {
         // }
 
         // prev->next = NULL;
-        // list->tail = prev;
         // free(current);
         // current = NULL;
 
