@@ -1,20 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "sll.h"
+#include "dll.h"
 
 struct node {
+    struct node *prev;
     int data;
     struct node *next;
 };
 
 struct list {
     Node *head;
+    Node *tail;
 };
 
 Node *createNode(int data) {
     Node *new = (Node *)malloc(sizeof(Node));
     if (!new) return NULL;
 
+    new->prev = NULL;
     new->data = data;
     new->next = NULL;
 
