@@ -10,7 +10,6 @@ struct node {
 
 struct list {
     Node *head;
-    Node *tail;
 };
 
 Node *createNode(int data) {
@@ -55,6 +54,7 @@ void addAtStart(List *list, int data) {
     } else {
         new = createNode(data);
         new->next = list->head;
+        list->head->prev = new;
         list->head = new;
     }
 }
@@ -72,6 +72,7 @@ void addAtEnd(List *list, int data) {
             current = current->next;
         }
         current->next = new;
+        new->prev = current;
     }
 }
 
@@ -81,6 +82,7 @@ void removeAtStart(List *list) {
     } else {
         Node *current = list->head;
         list->head = current->next;
+        list->head->prev = NULL;
         free(current);
         current = NULL;
     }
@@ -93,98 +95,112 @@ void removeAtEnd(List *list) {
         free(list->head);
         list->head = NULL;
     } else {
-        // Remove last element of the list using TWO POINTERS
-
-        // Node *current = list->head;
-        // Node *prev = current;
-
-        // while (current->next != NULL) {
-        //     prev = current;
-        //     current = current->next;
-        // }
-
-        // prev->next = NULL;
-        // free(current);
-        // current = NULL;
-
-        // Remove last element of the list using ONE POINTER
         Node *current = list->head;
 
-        while (current->next->next != NULL) {
+        while (current->next != NULL) {
             current = current->next;
         }
 
-        free(current->next);
-        current->next = NULL;
-    }
+        current->prev->next = NULL;
+        free(current);
+        current = NULL;
+   }
 }
 
-void insertNode(List *list, int data, int pos) {
+void insertNodeBefore(List *list, int data, int pos) {
     // Check if position valid
     int len = listLength(list);
-    if (pos < 1 || pos > len + 1) {
+    if (pos < 1 || pos > len) {
         printf("Invalid position\n\n");
         return;
     }
 
-    // Insert node at the beginning of the list
-    if (pos == 1) {
-        addAtStart(list, data);
-        return;
+    Node *current = list->head;
+    Node *curr_next = NULL;
+    Node *new = createNode(data);
+
+    while(pos > 2) {
+        current = current->next;
+        pos--;
     }
 
-    // Insert node at the end of the list
-    if (pos == len + 1) {
-        addAtEnd(list, data);
+    if (pos == 1) {
+        addAtStart(list, data);
+    } else {
+        curr_next = current->next;
+        current->next = new;
+        curr_next->prev = new;
+        new->next = curr_next;
+        new ->prev = current;
+    }
+}
+
+void insertNodeAfter(List *list, int data, int pos) {
+    // Check if position valid
+    int len = listLength(list);
+    if (pos < 1 || pos > len) {
+        printf("Invalid position\n\n");
         return;
     }
 
     Node *current = list->head;
+    Node *curr_next = NULL;
     Node *new = createNode(data);
 
-    pos--;
     while(pos != 1) {
         current = current->next;
         pos--;
     }
 
-    new->next = current->next;
-    current->next = new;
+    if (current->next == NULL) {
+        current->next = new;
+        new->prev = current;
+    } else {
+        curr_next = current->next;
+        current->next = new;
+        curr_next->prev = new;
+        new->next = curr_next;
+        new ->prev = current;
+    }
 }
 
-void removeNode(List *list, int data) {
+void removeNode(List *list, int pos) {
     Node *current = list->head;
-    Node *prev = current;
+    Node *curr_prev = NULL;
 
-    while (current != NULL) {
-        if (current->data == data) {
-            if (current == list->head) {
-                list->head = current->next;
-            } else {
-                prev->next = current->next;
-                free(current);
-                current = NULL;
-            }
-            return;
-        }
+    if (pos == 1 ) removeAtStart(list);
 
-        prev = current;
+    while (pos > 1) {
         current = current->next;
+        pos--;
+    }
+
+    if (current->next == NULL) {
+        removeAtEnd(list);
+    } else {
+        curr_prev = current->prev;
+        curr_prev->next = current->next;
+        current->next->prev = curr_prev;
+        free(current);
+        current = NULL;
     }
 }
 
 void reverse(List *list) {
-    Node *prev = NULL;
-    Node *next = NULL;
+    Node *current = list->head;
+    Node *curr_next = current->next;
 
-    while (list->head != NULL) {
-        next = list->head->next;
-        list->head->next = prev;
-        prev = list->head;
-        list->head = next;
+    current->next = NULL;
+    current->prev = curr_next;
+
+    while (curr_next != NULL) {
+        curr_next->prev = curr_next->next;
+        curr_next->next = current;
+        current = curr_next;
+        curr_next = curr_next->prev;
     }
 
-    list->head = prev;
+    list->head = current;
 }
 
 void printList(List *list) {

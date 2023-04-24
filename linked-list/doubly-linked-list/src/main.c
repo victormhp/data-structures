@@ -7,11 +7,12 @@ void printMenu() {
     printf("2. Add node at end\n");
     printf("3. Remove node at start\n");
     printf("4. Remove node at end\n");
-    printf("5. Insert node at n position\n");
-    printf("6. Remove Node\n");
-    printf("7. Reverse list\n");
-    printf("8. Print Linked List\n");
-    printf("9. Exit\n\n");
+    printf("5. Insert node before n position\n");
+    printf("6. Insert node after n position\n");
+    printf("7. Remove Node\n");
+    printf("8. Reverse list\n");
+    printf("9. Print Linked List\n");
+    printf("0. Exit\n\n");
     printf("Choose an option: ");
 }
 
@@ -25,7 +26,7 @@ int main() {
         printMenu();
         int num = scanf("%d", &option);
 
-        if (num != 1 || option < 1 || option > 9) {
+        if (num != 1 || option < 0 || option > 10) {
             printf("Invalid option. Please try again.\n\n");
             while (getchar() != '\n'); // Flush input buffer
             continue;
@@ -53,23 +54,30 @@ int main() {
                 scanf("%d", &arg1);
                 printf("Position: ");
                 scanf("%d", &arg2);
-                insertNode(list, arg1, arg2);
+                insertNodeBefore(list, arg1, arg2);
                 break;
             case 6:
+                printf("Data to insert: ");
+                scanf("%d", &arg1);
+                printf("Position: ");
+                scanf("%d", &arg2);
+                insertNodeAfter(list, arg1, arg2);
+                break;
+            case 7:
                 printf("Data to remove: ");
                 scanf("%d", &arg1);
                 removeNode(list, arg1);
                 break;
-            case 7:
+            case 8:
                 reverse(list);
                 break;
-            case 8:
+            case 9:
                 printList(list);
                 break;
-            case 9:
+            case 0:
                 break;
         }
-    } while (option != 9);
+    } while (option != 0);
 
     freeList(list);
     return 0;

@@ -17,7 +17,9 @@ void removeAtStart(List *list);
 
 void removeAtEnd(List *list);
 
-void insertNode(List *list, int data, int pos);
+void insertNodeBefore(List *list, int data, int pos);
+
+void insertNodeAfter(List *list, int data, int pos);
 
 void removeNode(List *list, int data);
 
