@@ -182,17 +182,19 @@ void removeNode(List *list, int pos) {
 }
 
 void reverse(List *list) {
-    Node *prev = NULL;
+    if (list->tail == NULL) return;
+
+    Node *current = list->tail->next;
     Node *next = NULL;
 
-    while (list->tail != NULL) {
-        next = list->tail->next;
-        list->tail->next = prev;
-        prev = list->tail;
-        list->tail = next;
-    }
+    do {
+        next = current->next;
+        current->next = list->tail;
+        list->tail = current;
+        current = next;
+    } while (current != list->tail->next);
 
-    list->tail = prev;
+    list->tail->next = current;
 }
 
 void printList(List *list) {
