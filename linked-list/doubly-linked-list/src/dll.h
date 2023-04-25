@@ -9,6 +9,8 @@ Node *createNode(int data);
 
 List *createList();
 
+int listLength(List *list);
+
 void addAtStart(List *list, int data);
 
 void addAtEnd(List *list, int data);
@@ -24,8 +26,6 @@ void insertNodeAfter(List *list, int data, int pos);
 void removeNode(List *list, int data);
 
 void printList(List *list);
-
-void printLength(List *list);
 
 void reverse(List *list);
 
