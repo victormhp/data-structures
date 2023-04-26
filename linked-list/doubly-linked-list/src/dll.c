@@ -46,13 +46,11 @@ int listLength(List *list) {
 }
 
 void addAtStart(List *list, int data) {
-    Node *new = NULL;
+    Node *new = createNode(data);
 
     if (list->head == NULL) {
-        new = createNode(data);
         list->head = new;
     } else {
-        new = createNode(data);
         new->next = list->head;
         list->head->prev = new;
         list->head = new;
@@ -60,14 +58,12 @@ void addAtStart(List *list, int data) {
 }
 
 void addAtEnd(List *list, int data) {
-    Node *new = NULL;
+    Node *new = createNode(data);
     Node *current = list->head;
 
     if (list->head == NULL) {
-        new = createNode(data);
         list->head = new;
     } else {
-        new = createNode(data);
         while (current->next != NULL) {
             current = current->next;
         }
