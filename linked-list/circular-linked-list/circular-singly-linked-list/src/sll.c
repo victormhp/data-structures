@@ -62,26 +62,22 @@ int searchElement(List *list, int element) {
 }
 
 void addAtStart(List *list, int data) {
-    Node *new = NULL;
+    Node *new = createNode(data);
 
     if (list->tail == NULL) {
-        new = createNode(data);
         list->tail = new;
     } else {
-        new = createNode(data);
         new->next = list->tail->next;
         list->tail->next = new;
     }
 }
 
 void addAtEnd(List *list, int data) {
-    Node *new = NULL;
+    Node *new = createNode(data);
 
     if (list->tail == NULL) {
-        new = createNode(data);
         list->tail = new;
     } else {
-        new = createNode(data);
         new->next = list->tail->next;
         list->tail->next = new;
         list->tail = list->tail->next;

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "sll.h"
 
 void printMenu() {
@@ -81,5 +82,6 @@ int main() {
         }
     } while (option != 0);
 
+    free(list);
     return 0;
 }
